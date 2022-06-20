@@ -4,7 +4,7 @@ resource "aws_launch_configuration" "My-Terraform-launch-configuration" {
   instance_type = var.instance_type
   key_name = var.key_pair
   user_data = file("${path.module}/appscript.sh")
-  #associate_public_ip_address = true
+  associate_public_ip_address = true
   security_groups = [aws_security_group.SG-APP.id]
   iam_instance_profile = data.aws_iam_role.Role.name
   lifecycle {
@@ -32,6 +32,7 @@ resource "aws_autoscaling_group" "My-ASG" {
   }
 }
 
+// Below code is for ASG-Upsacling policy
 resource "aws_autoscaling_policy" "Terraform-ASG-Policy" {
   name                   = "ASG-UpScalingPOLICY"
   scaling_adjustment     = 1
@@ -60,6 +61,8 @@ resource "aws_cloudwatch_metric_alarm" "CloudwatchforASG" {
   alarm_actions     = [aws_autoscaling_policy.Terraform-ASG-Policy.arn]
 }
 
+  
+// Below code is for ASG-Desacling policy
 resource "aws_autoscaling_policy" "Terraform-ASG-DPolicy" {
   name                   = "ASG-Descaling-POLICY"
   scaling_adjustment     = -1
@@ -88,7 +91,7 @@ resource "aws_cloudwatch_metric_alarm" "CloudwatchforDASG" {
   alarm_actions     = [aws_autoscaling_policy.Terraform-ASG-DPolicy.arn]
 }
 
-#For installing stress in linux
+#For installing stress in linux to check ASG working or not(CPU)
 /*
 amazon-linux-extras install epel -y
 yum install stress -y
