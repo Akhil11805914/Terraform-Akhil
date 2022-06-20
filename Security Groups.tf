@@ -1,3 +1,4 @@
+// I have same SG for instances and ELB
 resource "aws_security_group" "SG-APP" {
   name        = "SG-FOR-APP"
   description = "This sg is created for webapp"
