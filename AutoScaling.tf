@@ -1,3 +1,4 @@
+// This code is launch configuration
 resource "aws_launch_configuration" "My-Terraform-launch-configuration" {
   name   = "Terraform"
   image_id      = data.aws_ami.AMIFOREC2.id
@@ -12,6 +13,7 @@ resource "aws_launch_configuration" "My-Terraform-launch-configuration" {
   }
 }
 
+//This code is for Auto-Scaling group
 resource "aws_autoscaling_group" "My-ASG" {
   name                 = "terraform-asg-example"
   launch_configuration = aws_launch_configuration.My-Terraform-launch-configuration.name
