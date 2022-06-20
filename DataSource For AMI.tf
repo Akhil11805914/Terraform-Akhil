@@ -1,3 +1,4 @@
+// I created this data block for getting the latest AMI for EC2
 data "aws_ami" "AMIFOREC2" {
   most_recent      = true
   owners           = ["amazon"]
